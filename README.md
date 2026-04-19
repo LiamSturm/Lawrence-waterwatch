@@ -5,7 +5,7 @@ A citizen science initiative to monitor water quality on Lawrence, Kansas waterw
 ## What is this?
 
 Lawrence's Wakarusa River has no real-time public water quality monitoring. 
-This project designs, fabricates, and deploys low-cost Arduino-based sensors 
+This project designs, fabricates, and deploys low-cost sensors 
 to measure pH, temperature, and turbidity — and makes that data publicly 
 accessible to the Lawrence community.
 
