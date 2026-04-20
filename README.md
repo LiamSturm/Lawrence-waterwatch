@@ -20,6 +20,7 @@ are speaking a language nobody is listening to.
 ## Project Status
 
 Phase 1 — In development. Components ordered March 30, 2026.
+See [UPDATES.md](UPDATES.md) for the full project log.
 
 ## What I'm measuring
 
