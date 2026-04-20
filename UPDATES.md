@@ -159,3 +159,47 @@ monitoring.
 ---
 
 Follow along on Instagram at [@lawrencewaterwatch](https://www.instagram.com/lawrencewaterwatch)
+
+---
+
+## Update 002 — April 20, 2026
+
+### Kansas Data Science Conference — May 2, 2026
+
+On May 2nd I'll be attending the 
+[Kansas Data Science Conference 2026 (KDSC26)](https://people.cs.ksu.edu/~safia/KDSC26/) 
+at Kansas State University in Manhattan, KS.
+
+KDSC is a statewide event bringing together students, faculty, 
+researchers, and industry professionals around data science, AI, 
+and community impact. This year's theme — *"From community data 
+to community impact"* — is exactly what Lawrence WaterWatch is 
+trying to do.
+
+### Why I'm going
+
+The biggest unsolved problem in this project right now is the 
+public dashboard. Sensors can collect data. A gateway can push 
+it to the cloud. But getting that data into a form that's 
+actually useful and accessible to Lawrence residents — a live, 
+readable, public interface — is a data problem as much as a 
+hardware problem.
+
+KDSC's tracks include Applied Data Science in Agriculture, 
+Community Impact, and AI/ML. I'm going specifically to learn 
+from people who have already solved the problem of turning 
+raw environmental sensor data into something a community can 
+actually use.
+
+### What I want to come back with
+
+- A clearer picture of what dashboard platform fits this project
+- Any contacts working on environmental or agricultural data 
+  problems in Kansas who might be relevant to WaterWatch
+- A better understanding of how to structure the data pipeline 
+  from sensor to public display
+
+### After the conference
+
+This section will be updated after May 2nd with what I actually 
+learned and how it changes the project.
