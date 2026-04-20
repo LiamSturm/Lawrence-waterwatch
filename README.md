@@ -4,8 +4,8 @@ A citizen science initiative to monitor water quality on Lawrence, Kansas waterw
 
 ## What is this?
 
-Lawrence's Wakarusa River has no real-time public water quality monitoring. 
-This project designs, fabricates, and deploys low-cost sensors 
+In Lawrence the Wakarusa River and the Kansas River (Kaw) have no real-time public water quality monitoring. 
+This project designs, fabricates, and deploys low-cost IoT sensors 
 to measure pH, temperature, and turbidity — and makes that data publicly 
 accessible to the Lawrence community.
 
@@ -27,6 +27,7 @@ See [UPDATES.md](UPDATES.md) for the full project log.
 - pH
 - Water temperature  
 - Turbidity (water clarity)
+- TDS
 
 ## Built by
 
