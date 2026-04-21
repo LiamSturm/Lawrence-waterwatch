@@ -16,9 +16,9 @@ Here's exactly what was ordered and where things stand:
 | Quantity | Item | Source | Link | Price | Status |
 |---|------|--------|------|-------|--------|
 | 1 | ELEGOO Arduino Uno R3 | Amazon | [Link](https://www.amazon.com/ELEGOO-Board-ATmega328P-ATMEGA16U2-Compliant/dp/B01EWOE0UU) | $14.99 | In Hand |
-| 1 | DFRobot pH Sensor V2 (SEN0161-V2) | DFRobot | [Link](https://www.dfrobot.com/product-1782.html) | $39.50 | Ordered — not arrived |
-| 1 | DFRobot Turbidity Sensor (SEN0189) | DFRobot | [Link](https://www.dfrobot.com/product-1394.html) | $9.90 | Ordered — not arrived |
-| 1 | DFRobot DS18B20 Temperature Kit (KIT0021) | DFRobot | [Link](https://www.dfrobot.com/product-1354.html) | $7.50 | Ordered — not arrived |
+| 1 | DFRobot pH Sensor V2 (SEN0161-V2) | DFRobot | [Link](https://www.dfrobot.com/product-1782.html) | $39.50 | In Hand - arrived April 20 |
+| 1 | DFRobot Turbidity Sensor (SEN0189) | DFRobot | [Link](https://www.dfrobot.com/product-1394.html) | $9.90 | In Hand - arrived April 20 |
+| 1 | DFRobot DS18B20 Temperature Kit (KIT0021) | DFRobot | [Link](https://www.dfrobot.com/product-1354.html) | $7.50 | In Hand - arrived April 20 |
 | 1 | HiLetgo SD Card Module | Amazon | [Link](https://www.amazon.com/HiLetgo-Adater-Interface-Conversion-Arduino/dp/B07BJ2P6X6) | $6.99 | In Hand |
 | 1 | ELEGOO Jumper Wires 120pc | Amazon | [Link](https://www.amazon.com/Elegoo-EL-CP-004-Multicolored-Breadboard-arduino/dp/B01EV70C78) | $6.98 | In Hand |
 | 1 | ELEGOO 830 Point Breadboard 3-pack | Amazon | [Link](https://www.amazon.com/dp/B01EV6LJ7G) | $8.99 | In Hand |
@@ -96,7 +96,7 @@ this project was built to monitor.
 
 ---
 
-### Order Set #2 — Sensor replacements (ordering now)
+### Order Set #2 — Sensor replacements (ordered April 19)
 
 Switching from DFRobot to Amazon for all sensors. Same 
 measurements, Prime shipping, no more waiting on international 
@@ -106,9 +106,9 @@ accurately.
 
 | Quantity | Item | Purpose | Link | Price | Status |
 |---|------|---------|------|-------|--------|
-| 1 | Generic BNC pH Sensor Module + Probe | Replaces DFRobot pH sensor | [Link](https://www.amazon.com/dp/B07KDPQGYD) | $31.30 | To Order |
-| 1 | Gikfun Turbidity + DS18B20 Bundle | Replaces DFRobot turbidity and temperature | [Link](https://www.amazon.com/dp/B0FM85VRN4) | $32.88 | To Order |
-| 1 | CQRobot TDS Sensor | New — measures total dissolved solids | [Link](https://www.amazon.com/dp/B08KXRHK7H) | $11.99 | To Order |
+| 1 | Generic BNC pH Sensor Module + Probe | Replaces DFRobot pH sensor | [Link](https://www.amazon.com/dp/B07KDPQGYD) | $31.30 | Ordered — not arrived |
+| 1 | Gikfun Turbidity + DS18B20 Bundle | Replaces DFRobot turbidity and temperature | [Link](https://www.amazon.com/dp/B0FM85VRN4) | $32.88 | Gikfun Turbidity in hand, DS18B20 ordered - not arrived |
+| 1 | CQRobot TDS Sensor | New — measures total dissolved solids | [Link](https://www.amazon.com/dp/B08KXRHK7H) | $11.99 | In Hand |
 | | **Total** | | | **$76.17** | |
 
 ---
