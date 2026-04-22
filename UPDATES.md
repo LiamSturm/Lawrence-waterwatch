@@ -203,3 +203,55 @@ actually use.
 
 This section will be updated after May 2nd with what I actually 
 learned and how it changes the project.
+
+---
+
+## Update 003 — April 22, 2026
+
+### First prototype build — what happened and what's next
+
+Yesterday was the first hands-on build session for Lawrence WaterWatch. 
+All three Order Set #1 sensors were wired up and tested for the 
+first time. Here's exactly what happened.
+
+### What worked
+
+**Turbidity sensor** — wired and reading. Confirmed it responds 
+to changes in water clarity — NTU values changed visibly when 
+turbidity was introduced. Readings are not yet calibrated 
+accurately but the sensor is functional.
+
+### What didn't work yet
+
+**pH sensor** — would not complete two-point calibration. The 
+probe needs additional conditioning time before the DFRobot 
+library will accept calibration inputs. Will retry after 
+extended soak in distilled water.
+
+**Temperature sensor (DS18B20)** — returned -127°C, which 
+means the Arduino couldn't detect the sensor. Root cause: 
+missing 4.7kΩ pull-up resistor on the data line. The adapter 
+module does not have it built in as expected. Resistors are 
+being ordered.
+
+### What I learned
+
+This was the first time getting hands-on with the full sensor 
+suite. Despite the calibration and wiring issues, the session 
+was valuable — I now understand exactly how each sensor 
+connects, what each one needs to work correctly, and what 
+the failure modes look like. That knowledge makes the next 
+session faster.
+
+Building something and having it not work is still building. 
+The problems are documented. The fixes are clear.
+
+### What's next
+
+- Order 4.7kΩ resistors to fix the temperature sensor
+- Continue pH probe conditioning and retry calibration
+- Order Set #3 (Heltec WiFi LoRa 32 V3 + logic level shifter) 
+  is being ordered now to begin wireless transmission prototyping
+- Amazon Order Set #2 sensors still arriving — pH Sensor + DS18B20 bundle will provide additional components to experiment with
+
+---
