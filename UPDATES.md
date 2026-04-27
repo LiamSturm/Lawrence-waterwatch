@@ -127,7 +127,7 @@ readings in the field without needing a laptop.
 | 1 | Heltec WiFi LoRa 32 V3 (915MHz) | ESP32-S3 brain with built-in LoRa radio and OLED screen | [Link](https://www.amazon.com/dp/B0D1H1FN9Y) | $34.99 | To Order |
 | 1 | KeeYees Logic Level Shifter 4-Ch (10-pack) | Converts 5V sensor signals to 3.3V | [Link](https://www.amazon.com/dp/B07LG646VS) | $7.69 | To Order |
 | 1 | 4.7kΩ Resistors 1/4W (Pack of 100) | Pull-up resistor for DS18B20 temperature sensor data line | [Link](https://www.amazon.com/Resistor-10K-AXIAL-Pack-4-7K/dp/B003U42LIC) | $6.00 |To Order
-| | **Total** | | | **$42.68** | |
+| | **Total** | | | **$48.68** | |
 
 ---
 
