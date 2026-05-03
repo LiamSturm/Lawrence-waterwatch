@@ -202,8 +202,32 @@ actually use.
 
 ### After the conference
 
-This section will be updated after May 2nd with what I actually 
-learned and how it changes the project.
+The conference was worth the trip. A few specific takeaways:
+
+**Dashboard platform** — didn't land on a specific platform yet, 
+but got a much better sense of what the options look like in 
+practice. That decision is coming as the hardware gets closer 
+to deployment.
+
+**A useful connection** — met Will Duncan, a data professional 
+who offered to help if questions come up as the project develops. 
+Having someone to reach out to when the data pipeline gets 
+complex is valuable.
+
+**Existing water data sources** — there are organizations and 
+agencies that maintain water quality datasets for Kansas 
+waterways. Lawrence still has no real-time public monitoring 
+at recreational sites, which confirms the gap this project 
+is filling. As WaterWatch scales, integrating historical and 
+regional data from these sources alongside live sensor readings 
+could make the dashboard significantly more useful — giving 
+context to what the sensors are measuring in real time.
+
+**What changes:** The scope of the dashboard is now clearer. 
+It's not just a live readout of sensor values — the most 
+useful version combines real-time sensor data with broader 
+regional water quality context. That's a longer term goal 
+but worth designing toward from the start.
 
 ---
 
