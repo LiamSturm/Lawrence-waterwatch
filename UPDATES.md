@@ -280,3 +280,46 @@ The problems are documented. The fixes are clear.
 - Amazon Order Set #2 sensors still arriving — pH Sensor + DS18B20 bundle will provide additional components to experiment with
 
 ---
+
+## Update 004 — June 4, 2026
+
+### Where I've been — and why this repo went quiet
+
+The last substantive update to this repo was May 3rd — the KDSC conference reflection. There was a minor order status update on May 27th, but no real documentation since then. That's about a month of silence, and it deserves a straight explanation.
+
+Late April through mid-May was AP exam season. Studying took over the schedule and WaterWatch had to wait. After exams ended on May 21st, I went straight into an intensive debugging push on the Arduino prototype — working through the sensor issues documented in Update 003. That debugging stretched through the last week and a half of May into early June. I didn't document it in real time because I kept expecting to have something resolved to write about. I didn't.
+
+The repo going quiet wasn't the project going quiet. It was me working through a problem that didn't have a clean answer yet. That's documented now.
+
+### What happened during the debugging push
+
+After Update 003 identified two broken sensors, I spent the following weeks trying to fix them. Here's where each one landed.
+
+**Temperature sensor (DS18B20)** — The 4.7kΩ pull-up resistors from Order Set #3 arrived and were installed correctly. The sensor still returned -127°C. I checked whether the resistor itself was dead and could not confirm either way. Every standard fix in the troubleshooting playbook has been tried. The sensor is not working and the root cause remains unknown.
+
+**pH sensor** — Two-point calibration is a standard process and I followed it correctly. The problem is the probe itself. At this price point the probe quality isn't reliable enough to produce stable readings — values drift significantly during calibration regardless of technique. This is a hardware quality floor, not a calibration error.
+
+**Turbidity sensor** — Still reading and responding to changes in water clarity, but not calibrated to accurate NTU values. This is a known issue and a solvable one — it wasn't the reason for this decision.
+
+### The decision
+
+I'm done debugging this prototype stack. The temperature and pH sensors are not going to be fixed by more time on them — one has an unknown hardware fault, the other is simply not a quality instrument. Continuing to debug them is going around in circles, and this project needs to move forward.
+
+The Arduino Uno prototype served its purpose: it confirmed the build approach, identified what these sensors need to function, and taught me exactly what the failure modes look like. That knowledge carries forward. The hardware doesn't.
+
+### What's next — moving to the Heltec
+
+Almost all of order sets #2 and #3 are in hand:
+
+| Quantity | Item | Purpose | Link | Price | Status |
+|---|------|---------|------|-------|--------|
+| 1 | Generic BNC pH Sensor Module + Probe | Replaces DFRobot pH sensor | [Link](https://www.amazon.com/dp/B07KDPQGYD) | $31.30 | Ordered — not arrived |
+| 1 | Gikfun Turbidity + DS18B20 Bundle | Replacement sensors | [Link](https://www.amazon.com/dp/B0FM85VRN4) | $32.88 | In Hand |
+| 1 | CQRobot TDS Sensor | Total dissolved solids | [Link](https://www.amazon.com/dp/B08KXRHK7H) | $11.99 | In Hand |
+| 1 | Heltec WiFi LoRa 32 V3 (915MHz) | ESP32-S3 brain with built-in LoRa radio and OLED | [Link](https://www.amazon.com/dp/B0D1H1FN9Y) | $34.99 | In Hand |
+| 1 | KeeYees Logic Level Shifter 4-Ch (10-pack) | Converts 5V sensor signals to 3.3V for Heltec | [Link](https://www.amazon.com/dp/B07LG646VS) | $7.69 | In Hand |
+| 1 | 4.7kΩ Resistors 1/4W (Pack of 100) | Pull-up resistor for DS18B20 data line | [Link](https://www.amazon.com/Resistor-10K-AXIAL-Pack-4-7K/dp/B003U42LIC) | $6.00 | In Hand |
+
+The immediate priority is wireless transmission — getting the Heltec to successfully send data over LoRa radio before worrying about sensor accuracy. Once the wireless link is confirmed working, sensor calibration follows. Getting the architecture right comes before getting the readings perfect.
+
+---
