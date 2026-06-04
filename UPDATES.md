@@ -323,3 +323,14 @@ Almost all of order sets #2 and #3 are in hand:
 The immediate priority is wireless transmission — getting the Heltec to successfully send data over LoRa radio before worrying about sensor accuracy. Once the wireless link is confirmed working, sensor calibration follows. Getting the architecture right comes before getting the readings perfect.
 
 ---
+
+## Update 005 — June 4, 2026
+
+### Getting a job to fund the project
+
+I started training at Raising Cane's on May 19th and completed 
+drive-through training on May 30th. The project has cost $272.70 
+so far and that number will keep climbing as hardware deployment 
+gets closer. Working at Cane's is how I'll cover it.
+
+---
