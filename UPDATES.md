@@ -106,7 +106,7 @@ accurately.
 
 | Quantity | Item | Purpose | Link | Price | Status |
 |---|------|---------|------|-------|--------|
-| 1 | Generic BNC pH Sensor Module + Probe | Replaces DFRobot pH sensor | [Link](https://www.amazon.com/dp/B07KDPQGYD) | $31.30 | Ordered — not arrived |
+| 1 | Generic BNC pH Sensor Module + Probe | Replaces DFRobot pH sensor | [Link](https://www.amazon.com/dp/B07KDPQGYD) | $31.30 | In Hand |
 | 1 | Gikfun Turbidity + DS18B20 Bundle | Replaces DFRobot turbidity and temperature | [Link](https://www.amazon.com/dp/B0FM85VRN4) | $32.88 | In Hand |
 | 1 | CQRobot TDS Sensor | New — measures total dissolved solids | [Link](https://www.amazon.com/dp/B08KXRHK7H) | $11.99 | In Hand |
 | | **Total** | | | **$76.17** | |
