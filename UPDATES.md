@@ -334,3 +334,18 @@ so far and that number will keep climbing as hardware deployment
 gets closer. Working at Cane's is how I'll cover it.
 
 ---
+
+## Update 006 — June 17, 2026
+
+### Wireless testing delayed — waiting on data cable
+
+Started attempting to test the Heltec WiFi LoRa 32 V3 and 
+discovered the USB-C to USB-A data cable I owned was 
+non-functional. Can't upload code to the board without it.
+
+I'm fetching a replacement cable from Best Buy today.
+
+Wireless transmission testing will resume once the cable is 
+confirmed working.
+
+---
