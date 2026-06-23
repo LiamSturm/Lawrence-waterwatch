@@ -349,3 +349,17 @@ Wireless transmission testing will resume once the cable is
 confirmed working.
 
 ---
+
+## Update 007 — June 24, 2026
+
+### Heltec WiFi LoRa 32 V3 connected to WiFi
+
+Got the Heltec board recognized by the Windows PC, uploaded 
+the first sketch, and confirmed it connects to WiFi. Unplugged 
+it from the computer, powered it from a wall outlet alone, and 
+it connected to the router independently. The board works.
+
+Next is getting the sensors wired to the Heltec and testing 
+wireless data transmission.
+
+---
