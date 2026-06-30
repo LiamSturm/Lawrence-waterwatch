@@ -363,3 +363,32 @@ Next is getting the sensors wired to the Heltec and testing
 wireless data transmission.
 
 ---
+
+## Update 008 — June 30, 2026
+
+### First wireless sensor integration — temperature reading live
+
+The DS18B20 temperature sensor is now wired to the Heltec, 
+reading water temperature accurately, and transmitting data 
+wirelessly to a browser that updates every two seconds. This 
+is the first sensor successfully integrated on the Heltec and 
+the first sensor to transmit data wirelessly.
+
+Verification: dunked the sensor in the same glass of water as 
+a kitchen thermometer. Both read 77°F and are accurate to the nearest whole degree.
+
+This is a breakthrough. The Arduino prototype never got here. 
+The DS18B20 returned -127°C on the Arduino and was abandoned. 
+The replacement unit from Order Set #2 works perfectly on the 
+Heltec.
+
+The delay between Update 007 and now was soldering. The Heltec 
+came unsoldered. I borrowed a soldering gun and solder from a 
+friend, soldered all accessible pins on both header rows so I 
+wouldn't have to return to this later, and got the sensor wired 
+in. That took time but it's done.
+
+Next: integrate the remaining three sensors (pH, turbidity, 
+TDS) and get all four reading and transmitting together.
+
+---
