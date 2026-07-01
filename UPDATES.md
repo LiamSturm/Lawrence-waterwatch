@@ -392,3 +392,32 @@ Next: integrate the remaining three sensors (pH, turbidity,
 TDS) and get all four reading and transmitting together.
 
 ---
+
+## Update 009 — July 1, 2026
+
+### Two-sensor wireless node — temperature and TDS live
+
+The CQRobot TDS sensor is now wired to the Heltec and reading 
+total dissolved solids. Combined with the DS18B20 from Update 
+008, the board is now running a two-sensor wireless node — both 
+readings served to a browser over WiFi, updating every two 
+seconds, on wall power alone.
+
+**TDS wiring:** GPIO4 through a voltage divider (two 4.7kΩ 
+resistors in series between 3.3V and GND, signal read from the 
+midpoint). Temperature compensation was added to the TDS 
+calculation using the live DS18B20 reading — the formula adjusts 
+for how far water temperature is from 25°C, the sensor's 
+calibration standard, before applying the conversion to ppm.
+
+**Accuracy status:** The sensor is confirmed functional and 
+responding correctly. Tap water read ~370 ppm. Adding salt caused 
+a clear jump to ~890 ppm — the sensor is detecting dissolved 
+solids proportionally. Full accuracy calibration against a known 
+reference solution is still pending. The planned check is 1g of NaCl dissolved in 1L of distilled water, which should read ~1000 ppm.
+
+**What's next:** Distilled water calibration check for TDS, 
+then pH and turbidity sensors added to the same node. Final 
+goal is all four sensors reading and transmitting simultaneously.
+
+---
