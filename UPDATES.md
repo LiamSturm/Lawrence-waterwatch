@@ -421,3 +421,33 @@ then pH and turbidity sensors added to the same node. Final
 goal is all four sensors reading and transmitting simultaneously.
 
 ---
+
+## Update 010 — July 2, 2026
+
+### Turbidity sensor integrated — three-sensor node live
+
+The Gikfun TS-300B turbidity sensor is now wired to the Heltec 
+alongside the DS18B20 and CQRobot TDS sensor. All three are 
+reading simultaneously and displaying on a single auto-refreshing 
+WiFi dashboard.
+
+**Wiring:** Getting the sensor reading required diagnosing the 
+probe cable's wire-to-pin mapping — the initial wiring left the 
+IR emitter unpowered, producing a flat 0 across all conditions. 
+Resolved by cross-referencing the datasheet and a comparable 
+DFRobot module, then confirming the correct mapping through 
+trial: yellow→3, blue→2, red→1.
+
+**Voltage:** Tested VCC at both 5V and 3.3V. At 5V the analog 
+output clipped at the ESP32-S3 ADC's ceiling in clear water — 
+an overvoltage risk for the ADC pin. Switched to 3.3V, which 
+produced a clean dynamic range across conditions.
+
+**Accuracy:** Confirmed the expected inverse relationship — more 
+suspended particles means less light reaching the receiver, 
+which means lower voltage output. Clear tap water read ~2200 
+raw (~1.78V). Heavily turbid water with cocoa powder dropped 
+to near 0. The sensor is responding correctly across the full 
+range.
+
+---
