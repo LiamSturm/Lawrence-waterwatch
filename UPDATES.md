@@ -451,3 +451,49 @@ to near 0. The sensor is responding correctly across the full
 range.
 
 ---
+
+## Update 011 — July 3, 2026
+
+### pH sensor integrated — all four sensors live
+
+The pH sensor is now wired to the Heltec and reading accurately. 
+All four sensors — temperature, TDS, turbidity, and pH — are 
+displaying simultaneously on the combined WiFi dashboard.
+
+**GPIO conflict:** Initial wiring used GPIO1, which produced a 
+stuck reading immediately. Root cause: GPIO1 is internally 
+hard-wired to the Heltec's onboard battery voltage divider and 
+can't be used for external sensors. Moved to GPIO6.
+
+**Probe pinning:** After moving to GPIO6, any probe connection 
+immediately pinned the ADC to max output (4095/3.3V) regardless 
+of solution. Isolated the cause systematically — GPIO6 and the 
+bare board both tested fine independently, but any probe attached 
+pinned high. Root cause: the board's op-amp circuit is designed 
+for 5V and can't center its output correctly at 3.3V. Fixed by 
+moving board power to the Heltec's 5V pin and adding a 
+two-resistor voltage divider on the signal line to scale the 
+output back into the ESP32's 3.3V ADC range.
+
+**Calibration:** Offset calibration by shorting the probe 
+connector and adjusting the onboard trim potentiometer to center 
+the baseline, then a full two-point calibration using pH 7.0 
+and pH 4.0 buffer solutions, averaging 15+ readings per buffer 
+with simultaneous temperature readings. Nernst-equation 
+temperature compensation added to the pH calculation, scaling 
+the calibrated slope based on current water temperature relative 
+to the 24°C calibration temperature.
+
+**Accuracy:** pH 7 buffer reads 6.98–7.02. pH 4 buffer reads 
+3.97–4.01. Readings in tap and distilled water are unstable — 
+a known characteristic of glass pH electrodes in weakly-buffered 
+liquids, not a setup fault.
+
+### What's next
+
+- Verify TDS and turbidity accuracy against known reference solutions
+- Post a formal hardware breakdown documenting how the full four-sensor node functions
+- Field test the node in actual river water at the deployment sites
+- Begin the next phase — extending transmission range and building out the sensor network
+
+---
