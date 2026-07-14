@@ -497,3 +497,34 @@ liquids, not a setup fault.
 - Begin the next phase — extending transmission range and building out the sensor network
 
 ---
+
+## Update 012 — July 13, 2026
+
+### TDS sensor — root cause found and fixed
+
+TDS readings had drifted to match tap water almost exactly 
+(~370–448 ppm) even in distilled water, which should read near 
+0. Ruled out electrode residue by cleaning with vinegar — no 
+change. Confirmed the real problem with a controlled test: the 
+sensor gave identical readings in both air and distilled water, 
+meaning it wasn't responding to the liquid at all.
+
+**Root cause:** A wiring error introduced during other sensor 
+rewiring that day. The TDS module's power and signal lines were 
+unintentionally sharing a resistor network meant only for 
+scaling output signal, rather than getting clean, direct power. 
+The ESP32 was reading a fixed voltage off the resistor divider 
+itself — not the sensor's actual output. That's why the reading 
+never changed regardless of what was in the water.
+
+**Fix:** Rewired the module with direct, unobstructed 
+connections — straight to 3.3V, straight to GND, straight to 
+the ESP32 signal pin, no resistors in the path. This module's 
+output is already 3.3V-compatible, so no divider is needed.
+
+**Verified:** Distilled water now reads ~0 ppm. Tap water reads 
+a real, distinct value (~190–370 ppm depending on test). 
+Concentrated salt water read ~1900+ ppm. The sensor responds 
+correctly and proportionally across a wide range.
+
+---
