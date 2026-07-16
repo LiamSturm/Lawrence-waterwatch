@@ -528,3 +528,47 @@ Concentrated salt water read ~1900+ ppm. The sensor responds
 correctly and proportionally across a wide range.
 
 ---
+
+## Update 013 — July 15, 2026
+
+### Turbidity sensor — accuracy validated with dilution series
+
+Ran a controlled dilution series to confirm the turbidity sensor 
+gives a real, usable response across a range of conditions — not 
+just "clear" versus "very murky."
+
+**Method:** Switched from cocoa powder to cornstarch as the test 
+medium. Cocoa absorbs light rather than scattering it, while 
+cornstarch scatters light the way real suspended river sediment 
+does — a closer optical match. Ran a 9-point series in 1 cup of 
+distilled water: baseline, then 1/8, 1/4, 3/8, 1/2, 5/8, 3/4, 
+7/8, and 1 full teaspoon of cornstarch, averaging 15+ readings 
+at each concentration.
+
+**Results:**
+
+| Cornstarch | Avg Raw ADC Value |
+|---|---|
+| 0 tsp (baseline) | ~2354 |
+| 1/8 tsp | ~1680 |
+| 1/4 tsp | ~1136 |
+| 3/8 tsp | ~811 |
+| 1/2 tsp | ~625 |
+| 5/8 tsp | ~479 |
+| 3/4 tsp | ~381 |
+| 7/8 tsp | ~311 |
+| 1 tsp | ~263 |
+
+The response was fully monotonic — voltage dropped consistently 
+as concentration increased, with no flat spots or reversals 
+across the entire range. The curve shape also matched known 
+turbidity sensor physics: large drops at low concentrations, 
+progressively smaller drops at higher concentrations, since the 
+relationship between suspended particles and light blockage 
+compresses at high turbidity.
+
+No wiring or code changes were needed. The existing setup, 
+already integrated into the combined dashboard, produces 
+accurate, trustworthy readings.
+
+---
