@@ -572,3 +572,60 @@ already integrated into the combined dashboard, produces
 accurate, trustworthy readings.
 
 ---
+
+## Update 014 — July 18, 2026
+
+### First river deployment — Mutt Run field test
+
+Ran the project's first real-world field test at Mutt Run in 
+Lawrence, on the Wakarusa River just downstream of where water 
+exits Clinton Lake. Powered the full four-sensor node — 
+temperature, TDS, turbidity, and pH — off a power bank, 
+connected to a phone hotspot, and viewed live readings on the 
+dashboard at `waterwatch.local` directly from a phone browser. 
+No laptop needed.
+
+**Temperature:** 82.2°F / 27.87°C, consistent and stable across 
+all five readings. Read ~90°F in open air before submersion, 
+matching the day's outside temperature, then dropped to a 
+stable reading once in the water — expected behavior.
+
+**TDS:** 147–158 ppm, tightly consistent across all readings — a 
+plausible range for river water, and confirmation that the 
+temperature-compensated TDS fix from two days prior holds up 
+in the field.
+
+**Turbidity:** Raw values of 3643–3863, notably higher than the 
+~2200–2360 baseline from indoor bench testing. Root cause: 
+optical turbidity sensors like this one are known to be 
+sensitive to ambient sunlight, since sunlight carries strong 
+infrared energy the sensor's phototransistor can't distinguish 
+from its own emitter's signal passing through the water. This 
+inflates "clear water" readings outdoors in direct sun, even 
+when shielded — a documented characteristic of this sensor 
+class. Today's field readings aren't directly comparable to the 
+indoor calibration curve since lighting conditions differed. 
+Planned fix: add an opaque shield around the sensor's optical 
+tip to block ambient light, then re-test against the indoor 
+baseline.
+
+**pH:** Read 10.4–10.8 — not physically plausible for river 
+water. This is a known limitation of standard single-junction 
+glass pH electrodes in low-ionic-strength water, which most 
+natural river water is: the electrode's internal reference 
+solution leaches out through the junction faster than normal in 
+low-conductivity samples, creating an unstable diffusion 
+potential that corrupts the reading. This is a documented, 
+industry-recognized limitation, not a fault introduced by 
+today's setup. Planned fix is two-phase: short-term, extend 
+probe soak/stabilization time before logging and periodically 
+cross-check against a colorimetric pH test kit; long-term, 
+after the network and gateway phase is complete, replace the 
+probe with a low-ionic-strength or double-junction reference 
+electrode built for environmental samples.
+
+**Gaps for next visit:** No water sample was brought home for 
+bench comparison this session. Bring a physical kitchen 
+thermometer for an independent temperature cross-check next time. Bring a shield to encircle the turbidity sensors optical tip next time. 
+
+---
