@@ -629,3 +629,36 @@ bench comparison this session. Bring a physical kitchen
 thermometer for an independent temperature cross-check next time. Bring a shield to encircle the turbidity sensors optical tip next time. 
 
 ---
+
+## Update 015 — July 18, 2026
+
+### Phase 1 complete — moving into Phase 2
+
+Phase 1 is complete. All four sensors — temperature, TDS, turbidity, 
+and pH — are integrated, calibrated, and field-tested. The first 
+real-world deployment happened this month at Mutt Run on the 
+Wakarusa River.
+
+The field test also surfaced a new issue: turbidity sensitivity 
+to ambient sunlight, discovered when field readings came in higher 
+than the indoor baseline. It also confirmed that a known issue — 
+pH electrode instability in low-ionic-strength water — doesn't 
+resolve itself outside the lab either. Both have clear remediation 
+paths already identified. Those fixes run in parallel with Phase 2, 
+not before it — they don't block moving the project forward.
+
+### Phase 2 starts now
+
+Phase 2 is about scale: getting data flowing farther and building 
+out a real network of nodes across both rivers.
+
+- Fix turbidity's ambient light interference with an opaque sensor sleeve
+- Select a dashboard platform and get live data publicly accessible
+- Order and place the LoRaWAN gateway
+- Build the first long-range wireless node and confirm transmission
+- Scout and finalize deployment sites on both rivers
+- Replicate to 5+ nodes across the Kaw and Wakarusa
+- Design and fabricate weatherproof sensor enclosures
+- Determine power and mounting strategy for deployed nodes
+
+---
