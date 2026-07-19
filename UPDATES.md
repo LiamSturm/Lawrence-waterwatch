@@ -140,8 +140,8 @@ entire deployed network.
 
 | Quantity | Item | Purpose | Link | Price | Status |
 |---|------|---------|------|-------|--------|
-| 1 | Dragino LPS8v2 LoRaWAN Gateway (915MHz) | Receives all sensor node transmissions, pushes to cloud | [Link](https://www.amazon.com/dp/B0CQQX2WFL) | TBD | To Order |
-| | **Total** | | | **TBD** | |
+| 1 | SenseCAP M2 Multi-Platform LoRaWAN Indoor Gateway (SX1302), US915 | Receives all sensor node transmissions, pushes to cloud | [Link](https://www.amazon.com/SenseCAP-Multi-Platform-LoRaWAN-Indoor-Gateway/dp/B0GZVZMGRP) | $169.99 | Ordered |
+| | **Total** | | | **$169.99** | |
 
 Gateway placement is still being determined. The goal is to 
 position it centrally enough to receive signals from nodes 
