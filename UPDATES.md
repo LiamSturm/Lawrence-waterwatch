@@ -140,7 +140,7 @@ entire deployed network.
 
 | Quantity | Item | Purpose | Link | Price | Status |
 |---|------|---------|------|-------|--------|
-| 1 | SenseCAP M2 Multi-Platform LoRaWAN Indoor Gateway (SX1302), US915 | Receives all sensor node transmissions, pushes to cloud | [Link](https://www.amazon.com/SenseCAP-Multi-Platform-LoRaWAN-Indoor-Gateway/dp/B0GZVZMGRP) | $169.99 | Ordered |
+| 1 | SenseCAP M2 Multi-Platform LoRaWAN Indoor Gateway (SX1302), US915 | Receives all sensor node transmissions, pushes to cloud | [Link](https://www.amazon.com/SenseCAP-Multi-Platform-LoRaWAN-Indoor-Gateway/dp/B0GZVZMGRP) | $169.99 | In Hand |
 | | **Total** | | | **$169.99** | |
 
 Gateway placement is still being determined. The goal is to 
