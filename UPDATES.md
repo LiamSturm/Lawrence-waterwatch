@@ -313,7 +313,7 @@ Almost all of order sets #2 and #3 are in hand:
 
 | Quantity | Item | Purpose | Link | Price | Status |
 |---|------|---------|------|-------|--------|
-| 1 | Generic BNC pH Sensor Module + Probe | Replaces DFRobot pH sensor | [Link](https://www.amazon.com/dp/B07KDPQGYD) | $31.30 | Ordered — not arrived |
+| 1 | Generic BNC pH Sensor Module + Probe | Replaces DFRobot pH sensor | [Link](https://www.amazon.com/dp/B07KDPQGYD) | $31.30 | In Hand |
 | 1 | Gikfun Turbidity + DS18B20 Bundle | Replacement sensors | [Link](https://www.amazon.com/dp/B0FM85VRN4) | $32.88 | In Hand |
 | 1 | CQRobot TDS Sensor | Total dissolved solids | [Link](https://www.amazon.com/dp/B08KXRHK7H) | $11.99 | In Hand |
 | 1 | Heltec WiFi LoRa 32 V3 (915MHz) | ESP32-S3 brain with built-in LoRa radio and OLED | [Link](https://www.amazon.com/dp/B0D1H1FN9Y) | $34.99 | In Hand |
