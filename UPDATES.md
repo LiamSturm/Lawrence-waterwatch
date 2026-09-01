@@ -662,3 +662,34 @@ out a real network of nodes across both rivers.
 - Determine power and mounting strategy for deployed nodes
 
 ---
+
+## Update 016 — August 31, 2026
+
+### Hit a permitting wall — rivers are legislatively blocked for now
+
+Deployment on the Kansas River and Wakarusa River is blocked, at 
+least for the timeline this project has to work with.
+
+Permanent sensor installation in or along a navigable waterway 
+requires a permit from the U.S. Army Corps of Engineers (a 
+Nationwide Permit 5, specifically). That process has a long lead 
+time — long enough that starting it now wouldn't get a permit 
+approved before I leave for college in about a year. This isn't 
+a paperwork delay I can push through faster. It's a fixed 
+timeline set by the federal permitting process.
+
+I also looked at mounting a sensor on the KU rowing team's dock 
+as an alternative to a riverbed installation. The boathouse 
+manager declined.
+
+I've been in contact with the City of Lawrence about what 
+options exist, but that conversation hasn't produced a clear 
+path forward yet.
+
+Right now I'm deciding what the next step should be. This 
+project isn't stopping — the mission hasn't changed — but the 
+original plan for physical deployment needs to change, and I 
+haven't landed on what replaces it yet.
+
+---
+
