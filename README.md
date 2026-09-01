@@ -4,7 +4,7 @@ A citizen science initiative to monitor water quality on Lawrence, Kansas waterw
 
 ## What is this?
 
-This project designs, fabricates, and deploys low-cost IoT sensors to measure pH, temperature, turbidity, and TDS in Lawrence's rivers — and makes that data publicly accessible to the Lawrence community.
+This project designs, builds, and rigorously validates low-cost IoT sensors to measure pH, temperature, turbidity, and TDS in Lawrence's rivers.
 
 ## Why?
 
