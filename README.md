@@ -19,9 +19,26 @@ The personal connection: I grew up in Lawrence and watched my mom work at the ci
 
 ## Project Status
 
-Phase 1 — All four sensors (temperature, TDS, turbidity, pH) are integrated on a Heltec WiFi LoRa 32 V3 node, transmitting live over WiFi to a self-hosted dashboard. First field deployment completed July 2026 at Mutt Run on the Wakarusa River.
+Phase 1 — All four sensors (temperature, TDS, turbidity, pH) are 
+integrated on a Heltec WiFi LoRa 32 V3 node and field-tested at 
+Mutt Run on the Wakarusa River. Data transmits over WiFi to a 
+self-hosted dashboard, viewable on a phone or laptop on the same 
+network — not a public deployment.
 
-**Next:** verifying TDS and turbidity accuracy against known reference solutions, then extending transmission range and building out a multi-node sensor network across both rivers.
+Public river deployment (gateway, LoRa network, multi-node buildout) 
+was deliberately dropped. Permanent installation on either river 
+requires a long-lead-time USACE permit that isn't viable within 
+this project's timeline, and an alternative dock-mounting option 
+at the KU boathouse was declined. Rather than keep pursuing that 
+path, the project redirected toward building the most accurate, 
+rigorous instrument possible — see 
+[Update 017](https://github.com/LiamSturm/Lawrence-waterwatch/blob/main/UPDATES.md#update-017--september-1-2026) 
+for the full reasoning.
+
+**Current phase:** calibrating and validating all four sensors 
+against known reference standards, and fixing two known hardware 
+issues — a temperature sensor wiring fault and turbidity's 
+sensitivity to ambient sunlight.
 
 ## What I'm measuring
 
