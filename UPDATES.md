@@ -693,3 +693,40 @@ haven't landed on what replaces it yet.
 
 ---
 
+## Update 017 — September 1, 2026
+
+### Redirecting — instrument-grade bench work, not deployment
+
+Following Update 016: this project is no longer pursuing permits 
+for public river deployment. I'm still in contact with the City 
+of Lawrence while they look into what's possible on their end, 
+but I'm not driving that process anymore.
+
+Effort is redirecting into making the sensor itself as accurate 
+and rigorous as possible — a real instrument, not just a working 
+prototype. Data transmits to a phone over WiFi, not to a public 
+network. The definition of "done" for this phase has changed, 
+but the goal — a sensor that produces trustworthy water quality 
+data — hasn't.
+
+### What's no longer in scope
+
+- Gateway configuration and LoRa network setup
+- Public dashboard buildout
+- Additional node construction or multi-site deployment
+- Any permitting process for river installation
+
+### What's next
+
+- Calibrate and validate all four sensors against known reference 
+  standards — pH buffers, a NaCl/distilled water TDS check, a 
+  known turbidity reference, and a calibrated thermometer 
+  cross-check — to prove accuracy, not just that each sensor reads 
+  something
+- Fix the temperature sensor wiring fault
+- Build a light-blocking sleeve for the turbidity sensor to fix 
+  ambient sunlight interference, then retest
+- Update this repo's Project Status to reflect current scope — no 
+  more language implying a live, deployed network
+
+---
