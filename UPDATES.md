@@ -730,3 +730,41 @@ data — hasn't.
   more language implying a live, deployed network
 
 ---
+
+## Update 018 — September 5, 2026
+
+### Turbidity shield test, a pH clue, and a power fault that won't quit
+
+**Turbidity — testing the light shield.** Wrapped duct tape around 
+the sides of the turbidity probe tip, leaving the sensing prongs 
+exposed, to see if blocking ambient light fixes the sunlight 
+interference identified at Mutt Run. Before testing, confirmed 
+the probe's clear prongs are the actual sensor hardware, not a 
+shipping cap — so past field readings weren't caused by a missing 
+cover. Indoor results with the shield were accurate. The real test 
+is outdoors in direct sun, since that's where the original problem 
+showed up, and that test hasn't happened yet.
+
+**pH — an accidental clue.** pH readings today lined up well 
+against a cheap pool/spa test strip used as a rough cross-check. 
+The one thing that changed: the probe has been sitting in pH 7 
+buffer for about a month, longer than intended. That extended soak 
+may have stabilized the reference junction more than a quick 
+few-minute soak does — which would line up with the junction 
+potential drift issue already diagnosed. Not confirmed yet, just 
+a lead worth testing on purpose.
+
+**Power fault — still unresolved.** Switching the node from USB 
+power to the portable power bank knocked out every sensor reading 
+and status LED, while the Heltec board itself kept running fine — 
+WiFi stayed connected, Serial Monitor worked normally. Switching 
+back to USB power didn't immediately fix it either. This has 
+happened before and usually clears up with a firmware re-upload 
+and a power cycle, but this time it was more stubborn. A bypass 
+test aimed at isolating a shared power rail issue didn't produce 
+a clear answer. Looks like a loose or intermittent physical 
+connection rather than a code problem — needs real troubleshooting 
+time, and it's a genuine reliability risk if it shows up again 
+during actual use.
+
+---
