@@ -768,3 +768,53 @@ time, and it's a genuine reliability risk if it shows up again
 during actual use.
 
 ---
+
+## Update 019 — September 6, 2026
+
+### Turbidity fixed and calibrated, pH substantially improved
+
+**Turbidity — fully resolved.** Rewired the sensor from 3.3V to 
+5V, its rated supply voltage. Added a two-resistor voltage divider 
+(two 4.7kΩ in series) to bring its now-larger 0–4.5V output safely 
+into the ESP32's 3.3V ADC range, with firmware multiplying the raw 
+ADC voltage by 2.0 to recover the true sensor voltage. Also 
+replaced the duct tape shield with a black PVC pipe sleeve over 
+the optical tip — duct tape blocks visible light but not IR, so 
+it never actually stopped the interference.
+
+Outdoors, the reading held at raw ~2290 / 3.68V, matching the 
+indoor baseline exactly. The sunlight interference that drove 
+readings to raw 3643–3863 at Mutt Run is gone.
+
+With the fix confirmed, ran a two-point NTU calibration:
+- 0 NTU: clear tap water, raw 2290 / 3.68V
+- 29.6 NTU: 3 tsp 2% milk in 5 cups water — NTU calculated from 
+  milk's baseline turbidity (~2400 NTU) diluted by ratio 
+  (14.79 mL milk / 1197.74 mL total) — raw 1377 / 2.21V
+
+Slope: 29.6 / (2290 − 1377) = 0.03242 NTU per raw count
+Formula: `ntuValue = (2290 - rawTurbidity) * 0.03242`
+
+Tap water now reads 0.3–1.0 NTU, within the EPA's ≤1 NTU standard 
+for municipal drinking water. This calibration is a milk-based 
+approximation, not traceable to a certified formazin standard.
+
+**pH — substantially improved.** Outdoor readings came in at 
+6.86–7.46 today, down from 9.5+ in earlier sessions. Extended 
+probe soak time (about a month in pH 7 buffer) remains the leading 
+hypothesis, and today's results support it directionally. Not 
+fully stable yet — tomorrow's river test is the real validation.
+
+**Power fault** — attributed to loose jumper connections during 
+handling and transport, not a firmware or sensor issue. Accepted 
+as a known limitation of the breadboard prototype form factor for 
+now.
+
+### What's next
+
+River test tomorrow — full outdoor validation of all four sensors 
+in real river water on power bank. If readings hold 
+stable and plausible, every open issue closes and the instrument 
+is validated.
+
+---
