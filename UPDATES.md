@@ -818,3 +818,55 @@ stable and plausible, every open issue closes and the instrument
 is validated.
 
 ---
+
+## Update 020 — September 8, 2026
+
+### River validation complete — instrument confirmed working
+
+Ran the final validation test yesterday, September 7, at Mutt Run 
+on the Wakarusa River — all four sensors running simultaneously 
+outdoors, in real river water, on power bank power, in direct 
+sunlight. This was the same site where turbidity previously failed 
+due to sunlight interference, chosen specifically to confirm the 
+fix held under the conditions that broke it before.
+
+| Sensor | Reading | Status |
+|---|---|---|
+| Turbidity | 1.0–1.4 NTU | Pass |
+| pH | 7.38–7.65 | Pass |
+| TDS | 254 ppm | Pass |
+| Temperature | 84.9°F / 29.4°C | Pass |
+
+All four readings are consistent with published USGS and KDHE data for Kansas waterways. Turbidity sits right at the clear end of the expected range, which makes sense — this site sits just downstream of the Clinton Lake dam, where sediment has already settled out of the water before release. pH and TDS both land in the range expected for a healthy waterway carrying moderate agricultural influence.
+
+Also cross-checked two sensors on-site with independent tools: a 
+kitchen thermometer matched the temperature sensor's reading, and 
+a pH test strip read 7.2–7.6 in the same water, matching the pH 
+sensor's 7.38–7.65.
+
+**Closed:**
+- Turbidity's outdoor sunlight interference — resolved via the PVC 
+  pipe shield and 5V rewire
+- pH instability in field conditions — resolved via extended probe 
+  soak time
+- Power bank dropout fault — did not recur
+
+All four sensors are validated. TDS and temperature had no open 
+issues throughout.
+
+### Where this leaves the project
+
+The sensor validation phase is done. For now, I'm stopping here. 
+This project can't move onto the rivers without permission — if 
+that ever comes through, deployment resumes. Until then, I'm not 
+setting up the gateway.
+
+What exists now is a fully working, field-validated instrument. 
+The wiring documented in HARDWARE.md is out of date following 
+the recent turbidity rewire — I'll be updating that file and the 
+firmware in the repo soon, along with a project reflection. As it 
+stands, anyone can read this repo, follow the wiring and 
+calibration steps, and build a sensor that reads real water 
+quality data to their phone on demand.
+
+---
