@@ -331,5 +331,3 @@ void loop() {
   server.handleClient();
 }
 ```
-
-*Wiring diagrams and photos to be added in a future revision.*
