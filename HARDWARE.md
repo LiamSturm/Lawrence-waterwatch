@@ -1,10 +1,27 @@
 # Lawrence WaterWatch — Hardware Breakdown
 
 A technical reference for how the four-sensor node functions: wiring, 
-pin assignments, and calibration methods for each sensor, plus how 
-they're combined into a single WiFi dashboard.
+pin assignments, calibration methods, and current firmware — as of 
+September 24, 2026.
 
-**Board:** Heltec WiFi LoRa 32 V3 (ESP32-S3)
+**Board:** Heltec WiFi LoRa 32 V3 (ESP32-S3FN8), CP2102 USB bridge, 
+programmed in Arduino IDE 2.
+
+**Power:** USB or a YD-818P 30,000mAh power bank.
+
+**Form factor:** Breadboard prototype.
+
+The node measures temperature, TDS, turbidity (NTU), and pH, and 
+streams live readings to an auto-refreshing WiFi dashboard.
+
+---
+
+## Development Note
+
+I designed the system, chose the sensors and wiring, ran every 
+calibration and field test, and debugged the hardware. I used AI to 
+help write the Arduino code based on the logic and calibration values 
+I gave it.
 
 ---
 
@@ -12,87 +29,152 @@ they're combined into a single WiFi dashboard.
 
 | Sensor | Signal Pin | Power | Ground | Additional Wiring |
 |---|---|---|---|---|
-| DS18B20 (Temperature) | GPIO5 | 3.3V | GND | 4.7kΩ pull-up resistor between + and data lines |
+| DS18B20 (Temperature) | GPIO5 | 3.3V | GND | 4.7kΩ pull-up between + and data |
 | CQRobot TDS | GPIO4 | 3.3V | GND | Direct wiring, no resistors |
-| Gikfun TS-300B (Turbidity) | GPIO2 | 3.3V | GND | Direct wiring, no resistors |
-| pH Sensor (PH-4502C-style) | GPIO6 | 5V | GND | Two 4.7kΩ resistors in series (Po → GND) forming a voltage divider, GPIO6 taps the midpoint |
+| Gikfun TS-300B (Turbidity) | GPIO2 | 5V | GND | Two 4.7kΩ resistors in series forming a voltage divider; GPIO2 taps the midpoint |
+| pH (PH-4502C-style, Amazon B07KDPQGYD) | GPIO6 | 5V | GND | Two 4.7kΩ resistors in series forming a voltage divider; GPIO6 taps the midpoint |
 
-**Note:** GPIO1 is internally wired to the Heltec's onboard battery voltage divider and should never be assigned to an external sensor.
+**GPIO1 is internally wired to the Heltec's onboard battery voltage 
+divider.** Never assign it to an external sensor.
+
+Both 5V sensors use the same divider design: the sensor signal runs 
+through one 4.7kΩ resistor to a midpoint, then through a second 
+4.7kΩ resistor to GND. The midpoint goes to the ESP32 pin. Because 
+the two resistors are equal, the pin sees exactly half the sensor's 
+voltage, keeping it under the 3.3V ADC limit. Firmware multiplies 
+the measured voltage back up where needed.
 
 ---
 
 ## DS18B20 — Temperature
 
-**Wiring:** Digital sensor using the OneWire protocol. Data line requires 
-a 4.7kΩ pull-up resistor bridging the power and data lines — without it, 
-the sensor returns an explicit "not found" error rather than a bad reading.
+**Wiring:** Digital OneWire sensor on GPIO5, 3.3V. A 4.7kΩ pull-up 
+between power and data is required — without it, the sensor returns 
+exactly −127.00°C, an explicit "not found" error rather than a 
+garbage value.
 
-**Calibration:** None required — reports temperature directly via the 
-DallasTemperature library (`getTempCByIndex(0)`), no ADC voltage 
-conversion involved.
+**Build note:** The sensor ships with bare, unterminated leads. Short 
+male-pin jumper segments were soldered onto all three leads and 
+insulated with electrical tape.
 
-**Validated against:** Physical kitchen thermometer, matched at 77°F 
-during bench testing.
+**Calibration:** None needed. Reports °C directly via the 
+DallasTemperature library (`getTempCByIndex(0)`). Read first every 
+cycle, since both TDS and pH compensation depend on it.
 
-**Confirmed accuracy:** Field test (Wakarusa River) read 82.2°F 
-submerged, consistent across five readings, after settling from ~90°F 
-open-air ambient temperature.
+**Validation:**
+
+| Test | Reading |
+|---|---|
+| Kitchen thermometer cross-check | Matched at 77°F |
+| Wakarusa River (bench-era test) | 82.2°F, consistent across 5 readings |
+| Mutt Run, Sept 7, 2026 | 84.9°F |
+
+**Known behavior:** Occasional intermittent dropouts, which show as 
+−127.00°C — not wrong values.
 
 ---
 
 ## CQRobot TDS
 
-**Wiring:** Direct connection — no resistors or voltage divider. Native 
-analog output already falls within the ESP32's 0–3.3V ADC range.
+**Wiring:** Direct to GPIO4 at 3.3V. Native output is already within 
+ADC range.
 
 **Calibration:**
 
-Temperature compensation (using live DS18B20 reading):
-
+Temperature compensation using the live DS18B20 reading:
+```
 compensationCoefficient = 1.0 + 0.02 × (tempC − 25.0)
 compensatedVoltage = rawVoltage / compensationCoefficient
+```
 
-Voltage-to-ppm conversion (standard polynomial, valid 0–1000 ppm range):
-
+Voltage-to-ppm conversion (standard polynomial, reliable to ~1000 ppm):
+```
 tdsValue = (133.42 × V³ − 255.86 × V² + 857.39 × V) × 0.5
+```
 
-**Confirmed accuracy:**
+**Validation:**
 
-| Test condition | Reading |
+| Condition | Reading |
 |---|---|
 | Distilled water | ~0 ppm |
 | Lawrence tap water | 147–370 ppm |
-| Concentrated salt water | ~1900+ ppm (correct direction/proportion; exceeds formula's reliable range) |
-| Field (Wakarusa River) | 147–158 ppm, consistent across 5 readings |
-
-**Pending:** Formal calibration check with known NaCl concentration 
-(1g NaCl / 1L distilled water, expected ~1000 ppm).
+| Concentrated salt water | ~1900 ppm (correct direction; above reliable range) |
+| Wakarusa River (bench-era test) | 147–158 ppm |
+| Mutt Run, Sept 7, 2026 | ~254 ppm |
 
 ---
 
 ## Gikfun TS-300B — Turbidity
 
-**Wiring:** Direct connection — no resistors or voltage divider. Probe 
-connects via 3-wire cable through a JST-style connector to a driver 
-board.
+**Wiring:** Rated 5V DC, 0–4.5V analog output, powered at 5V. Signal 
+passes through the two-resistor divider to GPIO2, bringing the max 
+~4.5V down to ~2.25V at the pin. Firmware multiplies the measured 
+voltage by 2.0 to recover the true sensor voltage. The ESP32-S3 has 
+no ADC2/WiFi conflict, so GPIO2 reads correctly with WiFi active.
+
+**Probe cable → driver board:**
 
 | Probe wire | Driver board pin |
 |---|---|
 | Yellow | 3 |
 | Blue | 2 |
 | Red | 1 |
-| (unused) | 4 |
+| — | 4 (unused) |
 
-Driver board G/A/D/V header: G→GND, A→GPIO2 (signal), D→unconnected, V→3.3V.
+Driver board header: G → GND, A → divider top (midpoint → GPIO2), 
+D → unconnected, V → 5V.
 
-**Calibration:** No formalized NTU standard (e.g. formazin) yet — 
-pending item. Validated instead via a 9-point cornstarch dilution 
-series in distilled water (cornstarch chosen over cocoa powder — it 
-scatters light like real sediment rather than absorbing it).
+**Why 5V:** The sensor was originally run at 3.3V. Undervolting 
+dimmed the IR emitter and shrank signal headroom against ambient 
+light. Running at rated voltage with a divider fixed this.
 
-| Cornstarch added (1 cup water) | Avg Raw ADC Value |
+**Physical specs:** The upper housing is not waterproof — only the 
+tip goes underwater, per the manufacturer. There is no removable 
+protective cap; the two clear prongs are the finished optical 
+hardware.
+
+**Sunlight shield:** Ambient sunlight IR is indistinguishable from 
+the sensor's own emitter. Early unshielded field readings were 
+inflated (raw 3643–3863). A duct-tape sleeve was tried first — it 
+passed indoors but failed outdoors (raw ~2970 vs. ~2290 baseline), 
+since duct tape doesn't block enough IR. The current shield is a 
+section of gray PVC pipe slipped over the optical tip, extending 
+well past the prongs — the walls block ambient light, and the open 
+bottom lets water flow through. Outdoor tap water in direct sun now 
+reads raw ~2343 / 3.78V, matching the indoor baseline.
+
+**Calibration — two-point linear NTU:**
+
+| Point | Solution | Raw | Voltage |
+|---|---|---|---|
+| 0 NTU | Clear tap water | 2290 | 3.68V |
+| ~29.6 NTU | 3 tsp 2% reduced-fat milk in 5 cups water | ~1377 (9 readings, range 1367–1389) | 2.21V |
+
+NTU for point 2 was derived from a dilution calculation: 14.79 mL 
+milk / 1197.74 mL total = 0.01235 dilution ratio, multiplied by 
+~2,400 NTU (a commonly cited approximation for undiluted 2% milk, 
+not a measured or certified value) → ~29.64 NTU.
+
+```
+slope = 29.6 / (2290 − 1377) = 0.03242 NTU per raw count
+ntuValue = (2290 − rawTurbidity) × 0.03242, clamped to a minimum of 0
+```
+
+Verification: tap water reads 0.3–1.0 NTU. This is a milk-dilution 
+approximation, not traceable to a certified formazin/AMCO standard. 
+No temperature compensation is applied — turbidity is optical, not 
+electrochemical.
+
+**Supporting evidence — cornstarch dilution series:** Taken at the 
+earlier 3.3V supply, so these raw values aren't comparable to current 
+readings. Demonstrates fully monotonic response with a 
+diminishing-returns curve, consistent with Beer-Lambert-type 
+attenuation. Cornstarch was chosen because it scatters light like 
+real sediment, rather than absorbing it.
+
+| Cornstarch (1 cup water) | Avg Raw ADC |
 |---|---|
-| 0 (baseline) | ~2354 |
+| 0 | ~2354 |
 | 1/8 tsp | ~1680 |
 | 1/4 tsp | ~1136 |
 | 3/8 tsp | ~811 |
@@ -102,100 +184,145 @@ scatters light like real sediment rather than absorbing it).
 | 7/8 tsp | ~311 |
 | 1 tsp | ~263 |
 
-Response was fully monotonic with a diminishing-returns curve shape — 
-consistent with Beer-Lambert-type light attenuation at higher particle 
-concentrations. No temperature compensation applied — turbidity is an 
-optical property, not electrochemical.
-
-**Known field limitation:** Field readings (raw 3643–3863) came in 
-higher than the indoor baseline (~2354), due to ambient sunlight 
-interference — a documented characteristic of this sensor class. 
-Sunlight's infrared content isn't distinguishable from the sensor's 
-own emitter signal, inflating readings outdoors. Field readings aren't 
-yet directly comparable to the indoor calibration curve. Planned fix: 
-opaque shield around the optical tip to block ambient light.
-
 ---
 
-## pH Sensor (PH-4502C-style, Amazon B07KDPQGYD)
+## pH Sensor (PH-4502C-style, BNC probe, Amazon B07KDPQGYD)
 
-**Wiring:** Requires 5V power — the op-amp circuit can't center its 
-output correctly at 3.3V, causing the signal to pin at max ADC value 
-the instant a probe is connected. A two-resistor (4.7kΩ each) voltage 
-divider on the signal line scales the native 0–5V output down to a 
-safe 0–2.5V range for the ESP32's 3.3V ADC.
+**Wiring:** Requires 5V — the op-amp can't center its output at 3.3V, 
+and the signal pins at max ADC as soon as a probe is connected. Po → 
+two-resistor divider → GPIO6 at midpoint (0–5V becomes 0–2.5V). G → 
+GND, V+ → 5V. To and Do are left unconnected — temperature 
+compensation is done in software via the DS18B20.
 
-Board header pins used: Po (signal, through divider) → GPIO6, G → GND, 
-V+ → 5V. To (external temp probe) and Do (digital threshold) left 
-unconnected — temperature compensation is handled in software via the 
-DS18B20 instead.
+**Offset calibration** (one-time, hardware): probe disconnected, BNC 
+center pin shorted to the outer barrel, onboard trim pot adjusted 
+until GPIO6 read 1.250V.
 
-**Calibration:**
+**Two-point calibration** (15–20 readings averaged per buffer):
 
-1. **Offset calibration** (one-time, hardware): probe disconnected, 
-   BNC center pin shorted to outer barrel, onboard trim potentiometer 
-   adjusted until post-divider voltage at GPIO6 stabilized at 1.250V.
+| Buffer | Voltage | Temp |
+|---|---|---|
+| pH 7.00 | 1.2436V | 23.94°C |
+| pH 4.00 | 1.5096V | 24.32°C |
 
-2. **Two-point calibration** using pH 7.00 and pH 4.00 buffers, 
-   15–20 readings averaged per buffer with simultaneous temperature:
+Derived constants:
+```
+slope = (7.0 − 4.0) / (v7 − v4) = −11.28
+offset = 7.0 − (slope × v7) = 21.03
+T_CAL = 24.13°C
+```
 
-   | Buffer | Voltage | Temperature |
-   |---|---|---|
-   | pH 7.00 | 1.2436V | 23.94°C |
-   | pH 4.00 | 1.5096V | 24.32°C |
+**Nernst temperature compensation** at read time:
+```
+compensatedSlope = phSlope × (tempC + 273.15) / (T_CAL + 273.15)
+pH = compensatedSlope × voltage + phOffset
+```
 
-   Derived constants:
+pH is averaged over 20 ADC samples per reading.
 
-   slope = (7.0 − 4.0) / (v7 − v4) = −11.28
-   offset = 7.0 − (slope × v7) = 21.03
-   T_CAL = 24.13°C
+**Buffer validation:** pH 7 buffer reads 6.98–7.03. pH 4 buffer reads 
+3.97–4.04. Both held after integration into the dashboard firmware.
 
-3. **Nernst equation temperature compensation** (applied at read-time):
+**Field behavior:** Single-junction glass electrodes are unstable in 
+low-ionic-strength water — the reference electrolyte leaches 
+abnormally fast, creating an unstable diffusion potential. Early 
+field readings were falsely alkaline (10.3–10.8 in the Wakarusa 
+River, 9.5+ in tap water). Storing the probe in pH 7 buffer between 
+uses gives it an extended conditioning soak, which resolved the 
+instability — field readings climbed steadily back into a plausible 
+range as the probe conditioned:
 
-   compensatedSlope = phSlope × (currentTempC + 273.15) / (T_CAL + 273.15)
-   pH = compensatedSlope × currentVoltage + phOffset
+- 8.56 after a couple of minutes' soak (Lawrence Times shoot)
+- Tap water matched an HTH Spa test strip on Sept 5 (pool-formulated 
+  strip, rough sanity check only)
+- Outdoor tap water 6.86–7.46, then 6.96 (Sept 6)
+- Mutt Run, 7.38–7.65 (Sept 7)
 
-**Confirmed accuracy:** pH 7 buffer reads 6.98–7.03. pH 4 buffer reads 
-3.97–4.04. Both held steady after full integration into the WiFi 
-dashboard code.
-
-**Known limitation:** Unreliable, physically implausible readings in 
-weakly-buffered water — distilled, tap, and river water all produced 
-erratic or falsely alkaline readings (e.g. 10.3–10.8 in the Wakarusa 
-River), despite correct, consistent buffer calibration. This is a 
-documented limitation of single-junction glass pH electrodes: the 
-concentrated internal reference electrolyte leaches out abnormally 
-fast in low-conductivity samples, creating an unstable diffusion 
-potential. Not a defect in this setup's wiring or calibration.
-
-Planned fix, two-phase:
-- **Short-term:** extend probe soak/stabilization time before logging 
-  field readings, cross-check periodically against a colorimetric pH 
-  test kit
-- **Long-term:** after the network/gateway phase, replace with a 
-  low-ionic-strength or double-junction reference electrode built for 
-  environmental water sampling
+**Storage:** The probe is stored in pH 7 buffer. This is the working 
+solution — the extended soak it provides is what stabilized the 
+electrode in the field.
 
 ---
 
 ## Combined WiFi Dashboard
 
-All four sensors are read within a single HTTP handler on an ESP32 
-`WebServer` instance (port 80):
+A single HTTP handler on an ESP32 `WebServer`, port 80:
 
-- Temperature is read first each cycle, since its value feeds both the 
-  TDS temperature compensation and the pH Nernst compensation
-- TDS and turbidity are read via direct `analogRead()` calls, converted 
-  to voltage using the ESP32-S3's 12-bit ADC scale
-- pH is read via a dedicated function that averages 20 ADC samples to 
-  reduce signal noise, then passed through temperature compensation
-- All four values are rendered on a single auto-refreshing HTML page 
-  (2-second interval), styled as individual cards
-- UTF-8 character encoding is explicitly declared to fix a prior bug 
-  where the °F/°C symbol rendered incorrectly
-- The board runs an mDNS responder (`waterwatch.local`), so the 
-  dashboard is reachable without hardcoding an IP — confirmed working 
-  over both home WiFi and a phone hotspot in the field
+- Temperature is read first each cycle, since it feeds both TDS and 
+  pH compensation
+- TDS and turbidity are read via `analogRead()` using the 12-bit ADC 
+  scale (3.3V / 4095)
+- Turbidity is converted to true voltage (×2.0), then to NTU
+- pH is read via a function averaging 20 samples, then 
+  temperature-compensated
+- All four values render as cards on an HTML page that auto-refreshes 
+  every 2 seconds
+- `<meta charset='UTF-8'>` is required — without it the degree symbol 
+  renders as "Â°"
+- An mDNS responder serves the page at `http://waterwatch.local`, 
+  confirmed working over home WiFi and a phone hotspot
+- **Gotcha:** iPhone hotspot SSIDs use a curly apostrophe (’) — the 
+  firmware string must match exactly
+
+---
+
+## Field Validation — Mutt Run, September 7, 2026
+
+All four sensors together, outdoors in direct sun, in natural water, 
+on power bank.
+
+| Sensor | Reading |
+|---|---|
+| Turbidity | 1.0–1.4 NTU |
+| pH | 7.38–7.65 |
+| TDS | ~254 ppm |
+| Temperature | 84.9°F |
+
+The measurement point sits just below the Clinton Lake dam outflow — 
+reservoir settling explains the low turbidity. Mainstem 
+Wakarusa/Kansas River sites would be expected to read higher. This 
+is the same site where unshielded turbidity readings previously 
+failed; these readings are physically plausible and consistent. No 
+reference meter was used on site for this test.
+
+---
+
+## Known Limitations
+
+- **Breadboard connections:** jumpers can loosen during transport, 
+  occasionally causing all sensor readings to drop out after a 
+  power-source switch, while the Heltec stays responsive on WiFi and 
+  Serial. Not root-caused. Did not recur during stable operation or 
+  the Sept 7 field test.
+- **Turbidity calibration** is an approximation, not certified.
+
+---
+
+## Deployment Hardware — Built Only If River Access Is Approved
+
+The sensor node is complete and field-validated. The items below are 
+the hardware that would turn a validated instrument into a deployable 
+one. None of them have been built, and none will be unless the City 
+of Lawrence grants approval to place a node on the river for a period 
+of time. If that approval comes through, this is the work that 
+follows. Without it, the project is done as it stands.
+
+**Enclosure:**
+- LeMotech IP65 ABS junction box, 200×120×75mm, 4× M16 glands
+- The pH BNC panel nut can act as a bulkhead pass-through
+- Likely needs 1–2 extra glands
+
+**Mounting:**
+- Bank-mounted post above the flood line, probes cabled to the water
+- Needs a BNC extension for pH and spliced extensions for TDS and 
+  turbidity
+
+**Power:**
+- Keep the YD-818P bank — its built-in 1W solar panel is trickle only
+- Add a separate 5–10W IP67 USB solar panel
+- Duty-cycled draw is estimated at ~1–1.5mA, but that requires 
+  deep-sleep firmware that doesn't exist yet — current firmware runs 
+  WiFi continuously
 
 ---
 
@@ -250,7 +377,9 @@ void handleRoot() {
                   + 857.39 * compensatedVoltage) * 0.5;
 
   int rawTurbidity = analogRead(TURBIDITY_PIN);
-  float turbidityVoltage = rawTurbidity * (3.3 / 4095.0);
+  float turbidityVoltage = rawTurbidity * (3.3 / 4095.0) * 2.0;  // x2 recovers true voltage through divider
+  float ntuValue = (2290 - rawTurbidity) * 0.03242;               // two-point NTU calibration
+  if (ntuValue < 0) ntuValue = 0;
 
   float phVoltage = readPHVoltage();
   float phValue = readPH(tempC);
@@ -284,8 +413,8 @@ void handleRoot() {
 
   html += "<div class='card'>";
   html += "<div class='label'>Turbidity</div>";
-  html += "<div class='value'>" + String(turbidityVoltage, 2) + "<span class='unit'> V</span></div>";
-  html += "<div class='sub'>Raw: " + String(rawTurbidity) + "</div>";
+  html += "<div class='value'>" + String(ntuValue, 1) + "<span class='unit'> NTU</span></div>";
+  html += "<div class='sub'>" + String(turbidityVoltage, 2) + " V · Raw: " + String(rawTurbidity) + "</div>";
   html += "</div>";
 
   html += "<div class='card'>";
