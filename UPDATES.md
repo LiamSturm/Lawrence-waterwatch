@@ -861,10 +861,7 @@ This project can't move onto the rivers without permission — if
 that ever comes through, deployment resumes. Until then, I'm not 
 setting up the gateway.
 
-What exists now is a fully working, field-validated instrument. 
-The wiring documented in HARDWARE.md is out of date following 
-the recent turbidity rewire — I'll be updating that file and the 
-firmware in the repo soon, along with a project reflection. As it 
+What exists now is a fully working, field-validated instrument. As it 
 stands, anyone can read this repo, follow the wiring and 
 calibration steps, and build a sensor that reads real water 
 quality data to their phone on demand.
