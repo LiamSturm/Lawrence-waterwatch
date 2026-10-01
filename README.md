@@ -18,6 +18,10 @@ The personal connection: I grew up in Lawrence and watched my mom work at the ci
 * [HARDWARE.md](HARDWARE.md) — full technical breakdown: wiring, pin assignments, calibration methods, and source code for all four sensors
 * [REFLECTION.md](REFLECTION.md) — project retrospective: what changed, what I learned, what it cost, and what's still untested
 
+## More Resources
+
+You can view photos and videos of the projects progress on instagram, from the account titled @lawrencewaterwatch
+
 ## Project Status
 
 Phase 1 complete. All four sensors (temperature, TDS, turbidity, pH) are integrated on a Heltec WiFi LoRa 32 V3 node and field-tested at Mutt Run on the Wakarusa River — outdoors, in direct sunlight, in real river water. Readings were cross-checked against independent tools and line up with published USGS and KDHE data for Kansas waterways. Data transmits over WiFi to a self-hosted dashboard, viewable on a phone or laptop on the same network — not a public deployment.
